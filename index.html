@@ -1,13 +1,860 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Satyam's Portfolio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Satyam Raj — CLM Consultant & Integration Architect</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--ob:#07070D;--ob2:#0D0D18;--ob3:#13131F;--ob4:#1A1A28;--gold:#C9A84C;--gold2:#E2C47A;--gold3:#A07828;--gd:rgba(201,168,76,0.1);--gb:rgba(201,168,76,0.18);--cr:#F5F0E8;--cr2:rgba(245,240,232,0.62);--cr3:rgba(245,240,232,0.28);--cr4:rgba(245,240,232,0.09);--br:rgba(255,255,255,0.05);--glass:rgba(13,13,24,0.55);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;cursor:none;}
+body{background:var(--ob);color:var(--cr);font-family:"DM Sans",sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+::selection{background:var(--gd);color:var(--gold2);}
+
+#cursor{position:fixed;width:7px;height:7px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,opacity .25s;mix-blend-mode:difference;}
+#cring{position:fixed;width:32px;height:32px;border:1px solid rgba(201,168,76,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s;}
+.cursor-grow #cursor{width:14px;height:14px;}
+.cursor-grow #cring{width:52px;height:52px;border-color:rgba(201,168,76,.8);}
+
+#three-bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+#progress{position:fixed;top:0;left:0;height:1.5px;background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold2));z-index:9000;transition:width .08s;}
+
+#loader{position:fixed;inset:0;background:var(--ob);z-index:9500;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .9s ease,visibility .9s;}
+#loader.out{opacity:0;visibility:hidden;}
+.l-logo{font-family:"Cormorant Garamond",serif;font-size:3rem;font-weight:300;letter-spacing:.08em;overflow:hidden;}
+.l-logo .l1,.l-logo .l2{display:inline-block;transform:translateY(110%);animation:lUp .7s cubic-bezier(.16,1,.3,1) forwards;}
+.l-logo .l1{animation-delay:.15s;}
+.l-logo .l2{font-style:italic;color:var(--gold);animation-delay:.3s;}
+.l-bar{width:180px;height:1px;background:var(--br);margin-top:1.8rem;overflow:hidden;}
+.l-fill{height:100%;width:0;background:var(--gold);animation:lBar 2s ease forwards .5s;}
+@keyframes lUp{to{transform:translateY(0)}}
+@keyframes lBar{to{width:100%}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:1.7rem 3.5rem;display:flex;align-items:center;justify-content:space-between;transition:all .4s;}
+nav.sc{padding:1rem 3.5rem;background:rgba(7,7,13,.88);backdrop-filter:blur(28px);border-bottom:1px solid var(--br);}
+.nlogo{font-family:"Cormorant Garamond",serif;font-size:1.25rem;font-weight:500;color:var(--cr);text-decoration:none;}
+.nlogo em{color:var(--gold);font-style:italic;}
+.nlinks{display:flex;gap:2.2rem;list-style:none;}
+.nlinks a{font-size:.7rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--cr3);text-decoration:none;transition:color .2s;cursor:none;}
+.nlinks a:hover{color:var(--gold);}
+.ncta{font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gb);padding:.6rem 1.6rem;text-decoration:none;transition:all .3s;position:relative;overflow:hidden;cursor:none;}
+.ncta::before{content:"";position:absolute;inset:0;background:var(--gold);transform:translateX(-101%);transition:transform .3s ease;z-index:-1;}
+.ncta:hover{color:var(--ob);}
+.ncta:hover::before{transform:translateX(0);}
+
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:10rem 3.5rem 5rem;position:relative;z-index:1;}
+.h-tag{font-family:"DM Mono",monospace;font-size:.65rem;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:.9rem;margin-bottom:1.8rem;opacity:0;animation:fUp .7s ease 2.4s forwards;}
+.h-tag::before{content:"";width:2rem;height:1px;background:var(--gold);}
+.adot{width:6px;height:6px;border-radius:50%;background:#4ADE80;display:inline-block;margin-right:.4rem;animation:adot 2s infinite;}
+@keyframes adot{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.5);}70%{box-shadow:0 0 0 7px rgba(74,222,128,0);}}
+.h-name{font-family:"Cormorant Garamond",serif;line-height:.9;letter-spacing:-.02em;margin-bottom:1.4rem;}
+.h-nl{display:block;overflow:hidden;}
+.h-nl span{display:inline-block;transform:translateY(110%);font-size:clamp(4.5rem,10.5vw,9rem);font-weight:300;}
+.h-nl:nth-child(1) span{animation:fUp2 1s cubic-bezier(.16,1,.3,1) 2s forwards;}
+.h-nl:nth-child(2) span{animation:fUp2 1s cubic-bezier(.16,1,.3,1) 2.15s forwards;font-style:italic;color:var(--gold);}
+@keyframes fUp2{to{transform:translateY(0)}}
+.h-tag2{font-family:"Cormorant Garamond",serif;font-size:clamp(.95rem,2vw,1.35rem);font-style:italic;color:var(--cr2);max-width:46rem;margin-bottom:2.5rem;line-height:1.65;opacity:0;animation:fUp .7s ease 2.5s forwards;min-height:2em;}
+#tw::after{content:"|";color:var(--gold);animation:blink .75s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.h-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fUp .7s ease 2.7s forwards;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:.9rem 2rem;transition:all .3s;position:relative;overflow:hidden;cursor:none;}
+.bp{background:var(--gold);color:var(--ob);border:1px solid var(--gold);}
+.bp:hover{background:var(--gold2);}
+.bs{background:transparent;color:var(--cr2);border:1px solid var(--br);}
+.bs:hover{border-color:var(--gb);color:var(--cr);}
+.h-stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--br);backdrop-filter:blur(12px);background:var(--glass);max-width:54rem;margin-top:4rem;opacity:0;animation:fUp .7s ease 2.9s forwards;}
+.stat{padding:1.8rem 2rem;border-right:1px solid var(--br);position:relative;overflow:hidden;transition:background .3s;}
+.stat:hover{background:var(--gd);}
+.stat:last-child{border-right:none;}
+.sn{font-family:"Cormorant Garamond",serif;font-size:2.6rem;font-weight:500;color:var(--gold);line-height:1;display:block;margin-bottom:.35rem;}
+.sl{font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cr3);line-height:1.4;}
+@keyframes fUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+.sw{padding:8rem 3.5rem;border-top:1px solid var(--br);position:relative;z-index:1;}
+.sh{display:flex;align-items:baseline;gap:1.4rem;margin-bottom:4.5rem;}
+.snum{font-family:"DM Mono",monospace;font-size:.63rem;color:var(--gold);opacity:.55;letter-spacing:.06em;}
+.stit{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,3.8vw,3rem);font-weight:400;line-height:1.05;}
+.sline{flex:1;height:1px;background:var(--br);margin-left:1rem;}
+
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+.rvl{opacity:0;transform:translateX(-28px);transition:opacity .8s ease,transform .8s ease;}
+.rvr{opacity:0;transform:translateX(28px);transition:opacity .8s ease,transform .8s ease;}
+.rv.on,.rvl.on,.rvr.on{opacity:1;transform:none;}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+.agrid{display:grid;grid-template-columns:220px 1fr;gap:5rem;align-items:start;}
+.amono{width:180px;height:180px;border:1px solid var(--gb);display:flex;align-items:center;justify-content:center;position:relative;background:var(--glass);backdrop-filter:blur(16px);}
+.amono::before{content:"";position:absolute;inset:8px;border:1px solid rgba(201,168,76,.08);animation:monospin 9s linear infinite;}
+@keyframes monospin{to{transform:rotate(360deg)}}
+.amono-t{font-family:"Cormorant Garamond",serif;font-size:3.5rem;font-weight:300;color:var(--gold);}
+.atags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.8rem;}
+.atag{font-size:.63rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gb);padding:.32rem .8rem;transition:background .2s;cursor:none;}
+.atag:hover{background:var(--gd);}
+.abody p{font-size:.92rem;color:var(--cr2);line-height:1.95;margin-bottom:1.3rem;}
+.abody strong{color:var(--cr);font-weight:500;}
+.aloc{font-size:.67rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cr3);display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem;}
+.aloc::before{content:"◉";color:var(--gold);font-size:.58rem;}
+
+#skills-canvas-wrap{position:relative;height:360px;border:1px solid var(--br);background:var(--glass);backdrop-filter:blur(16px);overflow:hidden;}
+#skills-canvas{display:block;width:100%;height:100%;}
+
+.tline{position:relative;padding-left:2rem;}
+.tline::before{content:"";position:absolute;left:0;top:.5rem;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold) 0%,transparent 100%);transform:scaleY(0);transform-origin:top;transition:transform 1.4s cubic-bezier(.16,1,.3,1);}
+.tline.dr::before{transform:scaleY(1);}
+.tli{position:relative;padding-left:3.2rem;padding-bottom:4rem;}
+.tli:last-child{padding-bottom:0;}
+.tldot{position:absolute;left:-2.55rem;top:.25rem;width:10px;height:10px;background:var(--gold);transform:rotate(45deg);transition:transform .3s,box-shadow .3s;}
+.tldot.h{background:transparent;border:1px solid var(--gold);}
+.tli:hover .tldot{transform:rotate(45deg) scale(1.5);box-shadow:0 0 12px rgba(201,168,76,.6);}
+.tlp{font-family:"DM Mono",monospace;font-size:.64rem;color:var(--gold);letter-spacing:.1em;margin-bottom:.45rem;}
+.tlr{font-family:"Cormorant Garamond",serif;font-size:1.75rem;font-weight:500;color:var(--cr);margin-bottom:.22rem;line-height:1.15;}
+.tlc{font-size:.73rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--cr3);margin-bottom:.45rem;}
+.tlb2{display:inline-block;font-size:.6rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gd);border:1px solid var(--gb);padding:.22rem .65rem;margin-bottom:1.3rem;}
+.tlbulls{list-style:none;display:flex;flex-direction:column;gap:.75rem;}
+.tlbulls li{font-size:.84rem;color:var(--cr3);line-height:1.85;padding-left:1.1rem;position:relative;}
+.tlbulls li::before{content:"—";position:absolute;left:0;color:var(--gold);font-size:.68rem;top:.05em;}
+.tlbulls li strong{color:var(--cr2);font-weight:500;}
+
+.pfeat{border:1px solid var(--gb);background:var(--glass);backdrop-filter:blur(20px);padding:3rem;margin-bottom:1.4rem;position:relative;overflow:hidden;transform-style:preserve-3d;transition:border-color .3s, box-shadow .3s;}
+.pfeat:hover{box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(201,168,76,.3);}
+.pfeat::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.pflag{font-size:.6rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.pname{font-family:"Cormorant Garamond",serif;font-size:2.4rem;font-weight:500;color:var(--cr);margin-bottom:.35rem;line-height:1.1;}
+.psub{font-size:.78rem;color:var(--cr3);letter-spacing:.06em;margin-bottom:1.4rem;}
+.pdesc{font-size:.86rem;color:var(--cr2);line-height:1.95;max-width:52rem;margin-bottom:1.8rem;}
+.nn-wrap{width:100%;height:220px;position:relative;margin-bottom:1.8rem;border:1px solid var(--br);background:rgba(7,7,13,.5);overflow:hidden;}
+#nn-canvas{display:block;width:100%;height:100%;}
+.stacks{display:flex;flex-wrap:wrap;gap:.45rem;}
+.stk{font-family:"DM Mono",monospace;font-size:.66rem;color:var(--cr3);border:1px solid var(--br);padding:.28rem .65rem;transition:all .2s;}
+.stk:hover{border-color:var(--gb);color:var(--gold);}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.pcard{border:1px solid var(--br);background:var(--glass);backdrop-filter:blur(16px);padding:2rem;position:relative;overflow:hidden;transform-style:preserve-3d;transition:border-color .3s, box-shadow .3s;}
+.pcard:hover{border-color:var(--gb);box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.pcn{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:500;color:var(--cr);margin-bottom:.35rem;position:relative;z-index:1;}
+.pcd{font-size:.8rem;color:var(--cr3);line-height:1.8;margin-bottom:1.1rem;position:relative;z-index:1;}
+
+.ctier{margin-bottom:2.6rem;}
+.ctlabel{font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;display:flex;align-items:center;gap:1rem;}
+.ctlabel::after{content:"";flex:1;height:1px;background:var(--br);}
+.crow{display:flex;flex-wrap:wrap;gap:.65rem;}
+.chip{font-size:.76rem;color:var(--cr2);border:1px solid var(--br);padding:.55rem 1.2rem;transition:all .25s;position:relative;overflow:hidden;cursor:none;backdrop-filter:blur(8px);background:var(--glass);}
+.chip::before{content:"";position:absolute;inset:0;background:var(--gd);transform:translateX(-101%);transition:transform .3s ease;}
+.chip:hover::before{transform:translateX(0);}
+.chip:hover{border-color:var(--gb);color:var(--cr);}
+.chip span{position:relative;z-index:1;}
+.chip.t1{color:var(--gold);border-color:var(--gb);}
+.istrip{margin-top:2.8rem;padding-top:1.8rem;border-top:1px solid var(--br);display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;}
+.ilabel{font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cr3);margin-right:.3rem;}
+.itag{font-size:.65rem;color:var(--cr3);padding:.28rem .65rem;border:1px solid var(--br);transition:all .2s;}
+.itag:hover{border-color:var(--gb);color:var(--gold);}
+
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;}
+.cert{border:1px solid var(--br);padding:1.8rem;background:var(--glass);backdrop-filter:blur(16px);position:relative;overflow:hidden;transform-style:preserve-3d;transition:border-color .3s, box-shadow .3s;}
+.cert::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s;}
+.cert:hover{border-color:var(--gb);box-shadow:0 15px 40px rgba(0,0,0,.3);}
+.cert:hover::after{transform:scaleX(1);}
+.cico{font-family:"DM Mono",monospace;font-size:.6rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.9rem;}
+.cname{font-size:.86rem;font-weight:500;color:var(--cr);line-height:1.4;margin-bottom:.35rem;}
+.ciss{font-size:.71rem;color:var(--cr3);}
+
+#contact{background:var(--ob2);}
+.cogrid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+.cohl{font-family:"Cormorant Garamond",serif;font-size:clamp(2.2rem,3.8vw,3.4rem);font-weight:300;line-height:1.18;margin-bottom:1.4rem;}
+.cohl em{font-style:italic;color:var(--gold2);}
+.cosub{font-size:.86rem;color:var(--cr3);line-height:1.9;margin-bottom:2.2rem;}
+.cls{display:flex;flex-direction:column;gap:.65rem;}
+.cl{display:flex;align-items:center;gap:1.1rem;font-size:.82rem;color:var(--cr2);text-decoration:none;padding:.95rem 1.1rem;border:1px solid var(--br);transition:all .25s;position:relative;overflow:hidden;cursor:none;}
+.cl::before{content:"";position:absolute;inset:0;background:var(--gd);transform:translateX(-101%);transition:transform .3s;}
+.cl:hover::before{transform:translateX(0);}
+.cl:hover{border-color:var(--gb);color:var(--cr);}
+.cli{font-family:"DM Mono",monospace;font-size:.6rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;min-width:3.8rem;position:relative;z-index:1;}
+.cl span:last-child{position:relative;z-index:1;}
+.fw{background:var(--ob3);border:1px solid var(--br);padding:2.5rem;}
+.ftit{font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;}
+.fg{margin-bottom:1.1rem;}
+.fg label{display:block;font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--cr3);margin-bottom:.45rem;}
+.fg input,.fg textarea{width:100%;background:var(--ob);border:1px solid var(--br);color:var(--cr);font-family:"DM Sans",sans-serif;font-size:.84rem;font-weight:300;padding:.8rem .95rem;outline:none;transition:border-color .2s;resize:none;}
+.fg input:focus,.fg textarea:focus{border-color:var(--gb);}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--cr4);}
+.fsub{width:100%;background:var(--gold);border:none;color:var(--ob);font-family:"DM Sans",sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:1rem;cursor:none;transition:background .2s;margin-top:.4rem;}
+.fsub:hover{background:var(--gold2);}
+
+footer{padding:2rem 3.5rem;border-top:1px solid var(--br);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;}
+.fc{font-size:.68rem;color:var(--cr3);}
+.fr{font-family:"DM Mono",monospace;font-size:.6rem;color:var(--cr3);letter-spacing:.1em;text-transform:uppercase;}
+.fr span{color:var(--gold);}
+
+.glow-btn::after{content:"";position:absolute;inset:-2px;background:radial-gradient(circle at center,rgba(201,168,76,.25),transparent 70%);opacity:0;transition:opacity .3s;z-index:-1;}
+.glow-btn:hover::after{opacity:1;}
+
+@media(max-width:768px){nav{padding:1.1rem 1.5rem;}.nlinks{display:none;}.sw{padding:5rem 1.5rem;}#hero{padding:7rem 1.5rem 4rem;}.h-stats{grid-template-columns:repeat(2,1fr);}.agrid,.cogrid{grid-template-columns:1fr;gap:2.5rem;}.cgrid,.pgrid{grid-template-columns:1fr;}footer{flex-direction:column;gap:.7rem;text-align:center;}}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cring"></div>
+<div id="progress"></div>
+<canvas id="three-bg"></canvas>
+
+<div id="loader">
+  <div class="l-logo"><span class="l1">Satyam&nbsp;</span><span class="l2">Raj</span></div>
+  <div class="l-bar"><div class="l-fill"></div></div>
+</div>
+
+<nav id="nav">
+  <a href="#hero" class="nlogo">Satyam <em>Raj</em></a>
+  <ul class="nlinks">
+    <li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li>
+    <li><a href="#clients">Clients</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:satyamraj620@gmail.com" class="ncta">Hire Me</a>
+</nav>
+
+<section id="hero">
+  <div class="h-tag"><span class="adot"></span>Available Globally · Remote-First</div>
+  <h1 class="h-name">
+    <span class="h-nl"><span>Satyam</span></span>
+    <span class="h-nl"><span>Raj</span></span>
+  </h1>
+  <p class="h-tag2"><span id="tw"></span></p>
+  <div class="h-btns">
+    <a href="#contact" class="btn bp glow-btn">Get in Touch</a>
+    <a href="https://linkedin.com/in/satyam-raj2101" target="_blank" class="btn bs">LinkedIn</a>
+    <a href="https://github.com/satyamraj2101" target="_blank" class="btn bs">GitHub</a>
+    <a href="https://agreemetrix.com" target="_blank" class="btn bs">Agreemetrix ↗</a>
+  </div>
+  <div class="h-stats">
+    <div class="stat"><span class="sn" data-c="15" data-s="+">0</span><span class="sl">CLM Implementations</span></div>
+    <div class="stat"><span class="sn" data-c="8000" data-s="+">0</span><span class="sl">Enterprise Users Enabled</span></div>
+    <div class="stat"><span class="sn" data-c="95" data-s="%">0</span><span class="sl">UAT First-Pass Rate</span></div>
+    <div class="stat"><span class="sn" data-c="60" data-s="%">0</span><span class="sl">Operational Effort Reduced</span></div>
+  </div>
+</section>
+
+<section id="about" class="sw">
+  <div class="sh rv"><span class="snum">01</span><h2 class="stit">About</h2><div class="sline"></div></div>
+  <div class="agrid">
+    <div class="rvl">
+      <div class="amono"><span class="amono-t">SR</span></div>
+      <div class="aloc">Bhubaneswar · Remote-Ready Globally</div>
+      <div class="atags"><span class="atag">CLM Implementation</span><span class="atag">Integration Architect</span><span class="atag">LegalOps</span><span class="atag">Node.js</span><span class="atag">Founder</span></div>
+    </div>
+    <div class="abody rvr">
+      <p>The rarest thing in enterprise technology isn't a great developer or a great consultant. It's someone who is genuinely <strong>both</strong>. That's the only way I know how to work.</p>
+      <p>I'm a <strong>CLM Implementation Consultant & Integration Systems Designer</strong> at Integreon — promoted to Functional Consultant within 9 months, the fastest on my team.</p>
+      <p>I've delivered <strong>15+ end-to-end CLM implementations</strong> across Ironclad, DocuSign CLM, Leah (ContractPodAi), and Zoho CLM for Fortune 500 enterprises. I design the integration architecture, write the middleware, and build the connective tissue that makes every enterprise system work as one.</p>
+      <p>Outside client work, I'm building <strong>Agreemetrix</strong> — an AI-native CLM platform from scratch, because 15+ implementations taught me exactly where every existing platform quietly gives up.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="sw">
+  <div class="sh rv"><span class="snum">02</span><h2 class="stit">Skills Cloud</h2><div class="sline"></div></div>
+  <div id="skills-canvas-wrap"><canvas id="skills-canvas"></canvas></div>
+</section>
+
+<section id="experience" class="sw">
+  <div class="sh rv"><span class="snum">03</span><h2 class="stit">Experience</h2><div class="sline"></div></div>
+  <div class="tline" id="tl">
+    <div class="tli rv">
+      <div class="tldot"></div>
+      <div class="tlp">Feb 2026 — Present</div>
+      <div class="tlr">Functional Consultant</div>
+      <div class="tlc">Integreon · Bhubaneswar, India</div>
+      <div class="tlb2">⬆ Exceptional Early Promotion · 9 Months</div>
+      <ul class="tlbulls">
+        <li>Promoted for <strong>top client feedback scores</strong> across legal, procurement, and IT stakeholder groups globally — fastest promotion on team.</li>
+        <li>Lead cross-functional delivery owning solution design through go-live across US and EU time zones.</li>
+        <li>Internal SME and lead trainer for junior consultants on CLM configuration and integration patterns.</li>
+      </ul>
+    </div>
+    <div class="tli rv d1">
+      <div class="tldot h"></div>
+      <div class="tlp">May 2025 — Jan 2026</div>
+      <div class="tlr">Functional Analyst</div>
+      <div class="tlc">Integreon · Bhubaneswar, India</div>
+      <ul class="tlbulls">
+        <li><strong>15+ CLM implementations</strong> across Ironclad, DocuSign CLM, Leah (ContractPodAi), and Zoho CLM for Fortune 500 enterprises globally.</li>
+        <li><strong>Flagship SPFx:</strong> Eliminated licensing overhead for <strong>8,000+ users</strong> via custom SharePoint SPFx solution — cutting provisioning costs by ~90%.</li>
+        <li><strong>Integration Architecture:</strong> Snaplogic, Jitterbit, SAP BTP bi-directional Ariba sync, Salesforce, SharePoint, Jira, Monday.com across multi-region deployments.</li>
+        <li><strong>Automation:</strong> Node.js tooling cutting manual overhead ~60% across global environments.</li>
+        <li><strong>Data Migration:</strong> 99%+ integrity across 10,000+ contract records during Pentair's full CLM transition.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="sw">
+  <div class="sh rv"><span class="snum">04</span><h2 class="stit">Projects</h2><div class="sline"></div></div>
+  <div class="pfeat rv" id="fc">
+    <div class="pflag">★ Flagship · Founder & Architect</div>
+    <div class="pname">Agreemetrix</div>
+    <div class="psub">AI-Powered Contract Lifecycle Management Platform</div>
+    <div class="nn-wrap"><canvas id="nn-canvas"></canvas></div>
+    <p class="pdesc">Full-stack, multi-tenant CLM platform — 13 modules including AI clause review, contract authoring, obligation tracking, BI dashboards, and WebSocket real-time collaboration. NestJS/GraphQL/PostgreSQL backend with per-tenant schema isolation, Redis task queues, and REST API-first design.</p>
+    <div class="stacks"><span class="stk">NestJS</span><span class="stk">GraphQL</span><span class="stk">PostgreSQL</span><span class="stk">Redis</span><span class="stk">WebSocket</span><span class="stk">Multi-tenant</span><span class="stk">AI/LLM</span><a href="https://agreemetrix.com" target="_blank" style="margin-left:auto;font-size:.7rem;color:var(--gold);text-decoration:none;letter-spacing:.08em;align-self:center;cursor:none;">agreemetrix.com →</a></div>
+  </div>
+  <div class="pgrid">
+    <div class="pcard rv">
+      <div class="pflag" style="font-size:.58rem;margin-bottom:.7rem;">Production SaaS</div>
+      <div class="pcn">LinkLite</div>
+      <p class="pcd">Enterprise multi-tenant URL management microservice with admin analytics, webhook integrations, JWT auth, and rate limiting. Deployed via Docker on AWS EC2.</p>
+      <div class="stacks"><span class="stk">Node.js</span><span class="stk">PostgreSQL</span><span class="stk">AWS</span><span class="stk">Docker</span><span class="stk">JWT</span></div>
+    </div>
+    <div class="pcard rv d1">
+      <div class="pflag" style="font-size:.58rem;margin-bottom:.7rem;">Full-Stack App</div>
+      <div class="pcn">Job Tracking System</div>
+      <p class="pcd">Full-stack recruitment tracking with Role-Based Access Control, analytics dashboards, and reporting. Python Flask with MySQL on AWS RDS and Chart.js visualizations.</p>
+      <div class="stacks"><span class="stk">Python Flask</span><span class="stk">MySQL</span><span class="stk">AWS RDS</span><span class="stk">Chart.js</span><span class="stk">RBAC</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="clients" class="sw">
+  <div class="sh rv"><span class="snum">05</span><h2 class="stit">Key Clients</h2><div class="sline"></div></div>
+  <div class="ctier rv"><div class="ctlabel">Big 4 · Professional Services</div><div class="crow"><div class="chip t1"><span>KPMG</span></div><div class="chip t1"><span>PwC</span></div></div></div>
+  <div class="ctier rv d1"><div class="ctlabel">Fortune 500 · Enterprise</div><div class="crow"><div class="chip"><span>Akamai Technologies</span></div><div class="chip"><span>Pentair</span></div><div class="chip"><span>AJG</span></div><div class="chip"><span>Magnit</span></div><div class="chip"><span>Nexteer Automotive</span></div><div class="chip"><span>Pella Corporation</span></div></div></div>
+  <div class="ctier rv d2"><div class="ctlabel">Pharma · Biotech</div><div class="crow"><div class="chip"><span>BioCryst Pharmaceuticals</span></div><div class="chip"><span>CSL Behring</span></div><div class="chip"><span>PSI CRO</span></div></div></div>
+  <div class="istrip rv"><span class="ilabel">Industries</span><span class="itag">Professional Services</span><span class="itag">Insurance</span><span class="itag">Technology</span><span class="itag">Industrial</span><span class="itag">Pharmaceuticals</span><span class="itag">Biotech</span><span class="itag">Automotive</span><span class="itag">Workforce Management</span></div>
+</section>
+
+<section id="certifications" class="sw">
+  <div class="sh rv"><span class="snum">06</span><h2 class="stit">Certifications</h2><div class="sline"></div></div>
+  <div class="cgrid">
+    <div class="cert rv"><div class="cico">ContractPodAi</div><div class="cname">CLM Implementation Certified</div><div class="ciss">ContractPodAi · Official</div></div>
+    <div class="cert rv d1"><div class="cico">Amazon · 2024</div><div class="cname">AWS Academy Cloud Foundations</div><div class="ciss">Amazon Web Services</div></div>
+    <div class="cert rv d2"><div class="cico">Cisco · 2024</div><div class="cname">CCNA: Enterprise Networking & Automation</div><div class="ciss">Cisco Systems</div></div>
+    <div class="cert rv d1"><div class="cico">CFI</div><div class="cname">Data Science & ML Fundamentals</div><div class="ciss">Corporate Finance Institute</div></div>
+    <div class="cert rv d2"><div class="cico">HackerRank</div><div class="cname">Python · SQL · Problem Solving</div><div class="ciss">HackerRank Verified</div></div>
+    <div class="cert rv d3"><div class="cico">Coding Ninjas · 2023</div><div class="cname">Codekaze — All India Rank 411</div><div class="ciss">300+ DSA Problems · LeetCode</div></div>
+  </div>
+</section>
+
+<section id="contact" class="sw">
+  <div class="sh rv"><span class="snum">07</span><h2 class="stit">Let's Connect</h2><div class="sline"></div></div>
+  <div class="cogrid">
+    <div class="rvl">
+      <h2 class="cohl">Open to <em>remote</em><br>opportunities worldwide.</h2>
+      <p class="cosub">CLM implementation, integration architecture, or legal tech consulting. I deliver across IST, US East, and EU time zones.</p>
+      <div class="cls">
+        <a href="mailto:satyamraj620@gmail.com" class="cl"><span class="cli">Email</span><span>satyamraj620@gmail.com</span></a>
+        <a href="https://linkedin.com/in/satyam-raj2101" target="_blank" class="cl"><span class="cli">LinkedIn</span><span>linkedin.com/in/satyam-raj2101</span></a>
+        <a href="https://github.com/satyamraj2101" target="_blank" class="cl"><span class="cli">GitHub</span><span>github.com/satyamraj2101</span></a>
+        <a href="https://agreemetrix.com" target="_blank" class="cl"><span class="cli">Project</span><span>agreemetrix.com</span></a>
+      </div>
+    </div>
+    <div class="fw rvr">
+      <div class="ftit">Send a Message</div>
+      <div class="fg"><label>Name</label><input type="text" placeholder="Jane Smith" id="fn"/></div>
+      <div class="fg"><label>Email</label><input type="email" placeholder="jane@company.com" id="fe"/></div>
+      <div class="fg"><label>Subject</label><input type="text" placeholder="Remote CLM Opportunity" id="fs"/></div>
+      <div class="fg"><label>Message</label><textarea rows="4" placeholder="Tell me about the opportunity..." id="fm"></textarea></div>
+      <button class="fsub" onclick="sendForm()">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fc">© 2025 Satyam Raj · CLM Consultant & Integration Architect · Remote-Ready</div>
+  <div class="fr">Crafted with <span>precision</span></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ─── CURSOR ───────────────────────────────────────────────
+const cur=document.getElementById("cursor"),cring=document.getElementById("cring");
+const orb=document.createElement("div");
+orb.style.cssText="position:fixed;width:500px;height:500px;background:radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 60%);border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%, -50%);transition:opacity 0.5s;";
+document.body.appendChild(orb);
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener("mousemove",e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+"px";cur.style.top=my+"px";
+  orb.style.left=mx+"px";orb.style.top=my+"px";
+});
+(function ar(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  cring.style.left=rx+"px";cring.style.top=ry+"px";
+  requestAnimationFrame(ar);})();
+document.querySelectorAll("a,button").forEach(el=>{
+  el.addEventListener("mouseenter",()=>document.body.classList.add("cursor-grow"));
+  el.addEventListener("mouseleave",()=>document.body.classList.remove("cursor-grow"));
+});
+
+// ─── PROGRESS ──────────────────────────────────────────────
+const prog=document.getElementById("progress");
+window.addEventListener("scroll",()=>{
+  prog.style.width=(window.scrollY/(document.body.scrollHeight-innerHeight)*100)+"%";
+});
+
+// ─── NAV ───────────────────────────────────────────────────
+const nav=document.getElementById("nav");
+window.addEventListener("scroll",()=>nav.classList.toggle("sc",scrollY>50));
+
+// ─── THREE.JS BACKGROUND ───────────────────────────────────
+(function initThree(){
+  const canvas=document.getElementById("three-bg");
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(innerWidth,innerHeight);
+  
+  const scene=new THREE.Scene();
+  scene.fog=new THREE.FogExp2(0x07070D, 0.035);
+
+  const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,200);
+  camera.position.set(0,0,18);
+
+  const group=new THREE.Group();
+  scene.add(group);
+
+  const particleCount=250;
+  const maxDistance=4.2;
+  
+  const positions=new Float32Array(particleCount*3);
+  const velocities=[];
+  
+  for(let i=0;i<particleCount;i++){
+    positions[i*3]=(Math.random()-0.5)*45;
+    positions[i*3+1]=(Math.random()-0.5)*45;
+    positions[i*3+2]=(Math.random()-0.5)*35;
+    velocities.push({
+      x: (Math.random()-0.5)*0.02,
+      y: (Math.random()-0.5)*0.02,
+      z: (Math.random()-0.5)*0.02
+    });
+  }
+  
+  const pGeometry=new THREE.BufferGeometry();
+  pGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const pMaterial=new THREE.PointsMaterial({
+    color: 0xE2C47A, size: 0.12, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending
+  });
+  const particles=new THREE.Points(pGeometry, pMaterial);
+  group.add(particles);
+  
+  const lineMaterial=new THREE.LineBasicMaterial({
+    color: 0xC9A84C, transparent: true, opacity: 0.12, blending: THREE.AdditiveBlending
+  });
+  const lineGeometry=new THREE.BufferGeometry();
+  const linePositions=new Float32Array(particleCount*particleCount*3);
+  lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
+  const linesMesh=new THREE.LineSegments(lineGeometry, lineMaterial);
+  group.add(linesMesh);
+
+  let tRotX=0,tRotY=0,cRotX=0,cRotY=0;
+  document.addEventListener("mousemove",e=>{
+    tRotX=(e.clientY/innerHeight-0.5)*0.35;
+    tRotY=(e.clientX/innerWidth-0.5)*0.35;
+  });
+
+  window.addEventListener("resize",()=>{
+    renderer.setSize(innerWidth,innerHeight);
+    camera.aspect=innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+  });
+
+  let scrollAnim=0;
+  window.addEventListener("scroll",()=>{scrollAnim=scrollY;});
+
+  function animate(){
+    requestAnimationFrame(animate);
+    cRotX+=(tRotX-cRotX)*0.05;
+    cRotY+=(tRotY-cRotY)*0.05;
+    group.rotation.x=cRotX + Date.now()*0.0001;
+    group.rotation.y=cRotY + Date.now()*0.00015;
+    group.position.y = scrollAnim * 0.003;
+
+    let vertexpos=0, numConnected=0;
+    const posAttr = pGeometry.attributes.position;
+    const lPosAttr = lineGeometry.attributes.position;
+    
+    for(let i=0;i<particleCount;i++){
+      posAttr.array[i*3] += velocities[i].x;
+      posAttr.array[i*3+1] += velocities[i].y;
+      posAttr.array[i*3+2] += velocities[i].z;
+      
+      if(posAttr.array[i*3]<-22.5 || posAttr.array[i*3]>22.5) velocities[i].x*=-1;
+      if(posAttr.array[i*3+1]<-22.5 || posAttr.array[i*3+1]>22.5) velocities[i].y*=-1;
+      if(posAttr.array[i*3+2]<-17.5 || posAttr.array[i*3+2]>17.5) velocities[i].z*=-1;
+      
+      for(let j=i+1;j<particleCount;j++){
+        const dx = posAttr.array[i*3] - posAttr.array[j*3];
+        const dy = posAttr.array[i*3+1] - posAttr.array[j*3+1];
+        const dz = posAttr.array[i*3+2] - posAttr.array[j*3+2];
+        const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+        if(dist < maxDistance){
+          lPosAttr.array[vertexpos++] = posAttr.array[i*3];
+          lPosAttr.array[vertexpos++] = posAttr.array[i*3+1];
+          lPosAttr.array[vertexpos++] = posAttr.array[i*3+2];
+          lPosAttr.array[vertexpos++] = posAttr.array[j*3];
+          lPosAttr.array[vertexpos++] = posAttr.array[j*3+1];
+          lPosAttr.array[vertexpos++] = posAttr.array[j*3+2];
+          numConnected++;
+        }
+      }
+    }
+    posAttr.needsUpdate=true;
+    lPosAttr.needsUpdate=true;
+    lineGeometry.setDrawRange(0, numConnected*2);
+    renderer.render(scene,camera);
+  }
+  animate();
+})();
+
+// ─── LOADER ────────────────────────────────────────────────
+window.addEventListener("load",()=>{
+  setTimeout(()=>{
+    document.getElementById("loader").classList.add("out");
+    startTypewriter();
+  },2200);
+});
+
+// ─── TYPEWRITER ────────────────────────────────────────────
+function startTypewriter(){
+  const el=document.getElementById("tw");
+  const phrases=["CLM Implementation Consultant & Integration Architect","The consultant who codes","Building the future of CLM with Agreemetrix"];
+  let pi=0,ci=0,del=false;
+  function tick(){
+    const ph=phrases[pi];
+    if(!del){el.textContent=ph.slice(0,++ci);if(ci===ph.length){del=true;setTimeout(tick,2200);return;}}
+    else{el.textContent=ph.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;setTimeout(tick,350);return;}}
+    setTimeout(tick,del?38:72);
+  }
+  tick();
+}
+
+// ─── COUNTERS ──────────────────────────────────────────────
+document.querySelectorAll("[data-c]").forEach(el=>{
+  new IntersectionObserver(([e])=>{
+    if(!e.isIntersecting)return;
+    const tg=parseInt(el.dataset.c),sfx=el.dataset.s||"";
+    const st=performance.now();
+    (function u(n){
+      const p=Math.min((n-st)/1800,1),ease=1-Math.pow(1-p,3),v=Math.round(ease*tg);
+      el.textContent=tg>=1000&&v>=1000?Math.round(v/1000)+"K"+sfx:v+sfx;
+      if(p<1)requestAnimationFrame(u);
+    })(performance.now());
+  },{threshold:.5}).observe(el);
+});
+
+// ─── SCROLL REVEAL ─────────────────────────────────────────
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add("on");ro.unobserve(e.target);}
+}),{threshold:.07,rootMargin:"0px 0px -30px 0px"});
+document.querySelectorAll(".rv,.rvl,.rvr").forEach(el=>ro.observe(el));
+
+// ─── TIMELINE DRAW ─────────────────────────────────────────
+new IntersectionObserver(([e])=>{
+  if(e.isIntersecting)e.target.classList.add("dr");
+},{threshold:.1}).observe(document.getElementById("tl"));
+
+// ─── PHYSICS SKILLS CLOUD ──────────────────────────────────
+(function initSkills(){
+  const wrap=document.getElementById("skills-canvas-wrap");
+  const canvas=document.getElementById("skills-canvas");
+  const ctx=canvas.getContext("2d");
+  let W=wrap.clientWidth,H=wrap.clientHeight;
+  canvas.width=W;canvas.height=H;
+
+  const skills=[
+    {t:"ContractPodAi",cat:0},{t:"DocuSign CLM",cat:0},{t:"Ironclad",cat:0},{t:"Zoho CLM",cat:0},
+    {t:"Snaplogic",cat:1},{t:"Jitterbit",cat:1},{t:"SAP Ariba",cat:1},{t:"Salesforce",cat:1},
+    {t:"SharePoint SPFx",cat:1},{t:"Jira Forge",cat:1},{t:"Monday.com",cat:1},
+    {t:"Node.js",cat:2},{t:"Python",cat:2},{t:"NestJS",cat:2},{t:"GraphQL",cat:2},
+    {t:"PostgreSQL",cat:2},{t:"REST APIs",cat:2},{t:"AWS",cat:2},{t:"Docker",cat:2},
+    {t:"Solution Design",cat:3},{t:"UAT Leadership",cat:3},{t:"Data Migration",cat:3},{t:"LegalOps",cat:3}
+  ];
+  const cats=["#C9A84C","#4A9EE2","#4ADE80","#E27A4A"];
+  ctx.font="500 13px DM Mono, monospace";
+
+  const nodes=skills.map((s,i)=>({
+    x:80+Math.random()*(W-160),y:60+Math.random()*(H-120),
+    vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6,
+    w:ctx.measureText(s.t).width+28,h:32,
+    t:s.t,cat:s.cat,
+    ox:0,oy:0,hover:false
+  }));
+
+  let lmx=W/2,lmy=H/2;
+  canvas.addEventListener("mousemove",e=>{
+    const r=canvas.getBoundingClientRect();
+    lmx=e.clientX-r.left;lmy=e.clientY-r.top;
+    nodes.forEach(n=>{
+      n.hover=lmx>n.x-n.w/2&&lmx<n.x+n.w/2&&lmy>n.y-n.h/2&&lmy<n.y+n.h/2;
+    });
+  });
+
+  function drawSkills(){
+    ctx.clearRect(0,0,W,H);
+    // BG grid dots
+    ctx.fillStyle="rgba(201,168,76,0.04)";
+    for(let x=20;x<W;x+=40)for(let y=20;y<H;y+=40){ctx.beginPath();ctx.arc(x,y,1,0,Math.PI*2);ctx.fill();}
+
+    nodes.forEach(n=>{
+      // Physics
+      n.vx+=(Math.random()-.5)*.02;n.vy+=(Math.random()-.5)*.02;
+      n.vx*=.98;n.vy*=.98;
+      // Mouse repulsion
+      const dx=n.x-lmx,dy=n.y-lmy,dist=Math.hypot(dx,dy);
+      if(dist<80){const f=80/dist*.15;n.vx+=dx/dist*f;n.vy+=dy/dist*f;}
+      // Bounds
+      if(n.x<n.w/2||n.x>W-n.w/2)n.vx*=-1;
+      if(n.y<n.h/2||n.y>H-n.h/2)n.vy*=-1;
+      n.x=Math.max(n.w/2,Math.min(W-n.w/2,n.x+n.vx));
+      n.y=Math.max(n.h/2,Math.min(H-n.h/2,n.y+n.vy));
+
+      // Node collision
+      nodes.forEach(m=>{
+        if(m===n)return;
+        const dx=n.x-m.x,dy=n.y-m.y,d=Math.hypot(dx,dy);
+        const minD=(n.w+m.w)/2;
+        if(d<minD&&d>0){const f=(minD-d)/d*.05;n.vx+=dx*f;n.vy+=dy*f;}
+      });
+
+      const c=cats[n.cat];
+      // Draw pill
+      const rx=n.w/2,ry=n.h/2;
+      ctx.save();
+      ctx.translate(n.x,n.y);
+      // Glow on hover
+      if(n.hover){ctx.shadowColor=c;ctx.shadowBlur=16;}
+      // Background
+      ctx.fillStyle=n.hover?"rgba(201,168,76,0.15)":"rgba(13,13,24,0.7)";
+      ctx.strokeStyle=n.hover?c:`${c}55`;
+      ctx.lineWidth=n.hover?1.2:.7;
+      ctx.beginPath();
+      ctx.roundRect(-rx,-ry,n.w,n.h,n.h/2);
+      ctx.fill();ctx.stroke();
+      // Text
+      ctx.fillStyle=n.hover?c:`${c}aa`;
+      ctx.font=`${n.hover?"500":"400"} 11.5px DM Mono, monospace`;
+      ctx.textAlign="center";ctx.textBaseline="middle";
+      ctx.fillText(n.t,0,0);
+      ctx.restore();
+    });
+    requestAnimationFrame(drawSkills);
+  }
+  // Check roundRect support
+  if(!CanvasRenderingContext2D.prototype.roundRect){
+    CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
+      this.beginPath();this.moveTo(x+r,y);this.lineTo(x+w-r,y);
+      this.arcTo(x+w,y,x+w,y+r,r);this.lineTo(x+w,y+h-r);
+      this.arcTo(x+w,y+h,x+w-r,y+h,r);this.lineTo(x+r,y+h);
+      this.arcTo(x,y+h,x,y+h-r,r);this.lineTo(x,y+r);
+      this.arcTo(x,y,x+r,y,r);this.closePath();
+    };
+  }
+  drawSkills();
+  window.addEventListener("resize",()=>{W=wrap.clientWidth;H=wrap.clientHeight;canvas.width=W;canvas.height=H;});
+})();
+
+// ─── NEURAL NETWORK (Agreemetrix) ──────────────────────────
+(function initNN(){
+  const canvas=document.getElementById("nn-canvas");
+  if(!canvas)return;
+  const ctx=canvas.getContext("2d");
+  const wrap=canvas.parentElement;
+  let W=wrap.clientWidth,H=wrap.clientHeight;
+  canvas.width=W;canvas.height=H;
+
+  const nodeLabels=["Contract Authoring","AI Clause Review","Obligation Tracking","BI Dashboards","Multi-tenant Core","WebSocket Collab","REST API Layer","Redis Queues","Auth & Security","Workflow Engine","Notifications","Analytics"];
+  const nodes=nodeLabels.map((l,i)=>{
+    const angle=(i/nodeLabels.length)*Math.PI*2;
+    const r=Math.min(W,H)*0.36;
+    return{
+      x:W/2+Math.cos(angle)*r*(i%2===0?1:0.65),
+      y:H/2+Math.sin(angle)*r*(i%2===0?1:0.65),
+      bx:W/2+Math.cos(angle)*r*(i%2===0?1:0.65),
+      by:H/2+Math.sin(angle)*r*(i%2===0?1:0.65),
+      label:l,pulse:0,hover:false
+    };
+  });
+
+  const edges=[];
+  nodes.forEach((n,i)=>{
+    for(let j=i+1;j<nodes.length;j++){
+      if(Math.random()>0.55){
+        const cp = {
+          x: W/2 + (Math.random()-0.5)*W*0.3,
+          y: H/2 + (Math.random()-0.5)*H*0.3
+        };
+        edges.push({a:i,b:j,cp:cp,progress:0,speed:0.008+Math.random()*0.015,active:false, trailLength: Math.random()*0.1+0.08});
+      }
+    }
+  });
+
+  let lmx=0,lmy=0;
+  wrap.addEventListener("mousemove",e=>{
+    const r=canvas.getBoundingClientRect();
+    lmx=e.clientX-r.left; lmy=e.clientY-r.top;
+  });
+  wrap.addEventListener("mouseleave",()=>{ lmx=-1000; lmy=-1000; });
+
+  function getBezierXY(t, p0, p1, p2) {
+    const mt = 1-t;
+    return {
+      x: mt*mt*p0.x + 2*mt*t*p1.x + t*t*p2.x,
+      y: mt*mt*p0.y + 2*mt*t*p1.y + t*t*p2.y
+    };
+  }
+
+  let edgeTimer=0;
+  function activateEdge(){
+    const inactives = edges.filter(e=>!e.active);
+    if(inactives.length>0){
+      const e = inactives[Math.floor(Math.random()*inactives.length)];
+      e.active=true; e.progress=0;
+    }
+  }
+
+  function drawNN(){
+    ctx.clearRect(0,0,W,H);
+    edgeTimer++;
+    if(edgeTimer%15===0)activateEdge();
+
+    nodes.forEach(n=>{
+      const dx=lmx-n.x, dy=lmy-n.y, dist=Math.hypot(dx,dy);
+      n.hover = dist<45;
+      if(n.hover && dist>0){
+        n.x -= (dx/dist)*(50-dist)*0.04;
+        n.y -= (dy/dist)*(50-dist)*0.04;
+      }
+      n.x += (n.bx-n.x)*0.05;
+      n.y += (n.by-n.y)*0.05;
+    });
+
+    edges.forEach(e=>{
+      const a=nodes[e.a],b=nodes[e.b];
+      
+      ctx.beginPath();
+      ctx.moveTo(a.x,a.y);
+      ctx.quadraticCurveTo(e.cp.x, e.cp.y, b.x, b.y);
+      ctx.strokeStyle="rgba(201,168,76,0.08)";
+      ctx.lineWidth=0.8;
+      ctx.stroke();
+
+      if(e.active){
+        const pos = getBezierXY(e.progress, a, e.cp, b);
+        
+        ctx.beginPath();
+        const g=ctx.createRadialGradient(pos.x,pos.y,0,pos.x,pos.y,12);
+        g.addColorStop(0,"rgba(226,196,122,0.8)");
+        g.addColorStop(1,"rgba(201,168,76,0)");
+        ctx.fillStyle=g;
+        ctx.arc(pos.x,pos.y,12,0,Math.PI*2);
+        ctx.fill();
+
+        const trailStart = Math.max(0, e.progress-e.trailLength);
+        if(e.progress > 0){
+          ctx.beginPath();
+          ctx.moveTo(pos.x, pos.y);
+          const tailPos = getBezierXY(trailStart, a, e.cp, b);
+          ctx.quadraticCurveTo(e.cp.x, e.cp.y, tailPos.x, tailPos.y);
+          ctx.strokeStyle="rgba(226,196,122,0.85)";
+          ctx.lineWidth=1.5;
+          ctx.stroke();
+        }
+        
+        e.progress+=e.speed;
+        if(e.progress>=1){e.active=false; nodes[e.b].pulse=1;}
+      }
+    });
+
+    nodes.forEach(n=>{
+      if(n.pulse>0) n.pulse-=0.03;
+      const rp = n.pulse>0 ? 1 : 0;
+      
+      if(rp>0 || n.hover){
+        const glow = n.hover ? 0.6 : rp*0.4;
+        const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,30);
+        g.addColorStop(0,`rgba(201,168,76,${glow})`);
+        g.addColorStop(1,"rgba(201,168,76,0)");
+        ctx.fillStyle=g;
+        ctx.beginPath();ctx.arc(n.x,n.y,30,0,Math.PI*2);ctx.fill();
+      }
+
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.hover?7:5,0,Math.PI*2);
+      ctx.fillStyle= (n.pulse>0.3 || n.hover)?"#E2C47A":"#C9A84C";
+      ctx.fill();
+
+      ctx.font=`${n.hover?500:400} 10.5px DM Mono, monospace`;
+      ctx.fillStyle=n.hover?"#E2C47A":"rgba(245,240,232,0.55)";
+      ctx.textAlign="center";ctx.textBaseline="middle";
+      const lx=n.x+(n.x<W/2?-1:1)*(Math.abs(n.x-W/2)<30?0:22);
+      const ly=n.y+(n.y<H/2?-16:16);
+      ctx.fillText(n.label,lx,ly);
+    });
+    requestAnimationFrame(drawNN);
+  }
+  drawNN();
+  window.addEventListener("resize",()=>{W=wrap.clientWidth;H=wrap.clientHeight;canvas.width=W;canvas.height=H;});
+})();
+
+// ─── DYNAMIC 3D TILT & GLARE ─────────────────────────────────
+function applyTilt(el, amt, glare = true) {
+  if (glare && !el.querySelector('.glare')) {
+    const g = document.createElement('div');
+    g.className = 'glare';
+    g.style.cssText = 'position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%, rgba(201,168,76,0.15), transparent 60%);opacity:0;transition:opacity 0.3s;z-index:10;';
+    el.appendChild(g);
+  }
+  el.addEventListener("mousemove",e=>{
+    const r=el.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width;
+    const y=(e.clientY-r.top)/r.height;
+    const tiltX=(y-0.5)*amt;
+    const tiltY=(x-0.5)*-amt;
+    el.style.transform=`perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-4px)`;
+    el.style.borderColor="var(--gb)";
+    if(glare){
+      const g = el.querySelector('.glare');
+      if(g) {
+        g.style.opacity="1";
+        g.style.background=`radial-gradient(circle at ${x*100}% ${y*100}%, rgba(201,168,76,0.2), transparent 50%)`;
+      }
+    }
+  });
+  el.addEventListener("mouseleave",()=>{
+    el.style.transform="";
+    el.style.borderColor="";
+    if(glare){
+      const g = el.querySelector('.glare');
+      if(g) g.style.opacity="0";
+    }
+  });
+}
+if(document.getElementById("fc")) applyTilt(document.getElementById("fc"), 6);
+document.querySelectorAll(".pcard, .cert").forEach(c=>applyTilt(c, 10));
+
+// ─── MAGNETIC BUTTONS ──────────────────────────────────────
+document.querySelectorAll(".btn,.ncta,.fsub").forEach(btn=>{
+  btn.addEventListener("mousemove",e=>{
+    const r=btn.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*.22,y=(e.clientY-r.top-r.height/2)*.22;
+    btn.style.transform=`translate(${x}px,${y}px)`;
+  });
+  btn.addEventListener("mouseleave",()=>btn.style.transform="");
+});
+
+// ─── NAV ACTIVE ────────────────────────────────────────────
+const secs=document.querySelectorAll("section[id]");
+const nas=document.querySelectorAll(".nlinks a");
+window.addEventListener("scroll",()=>{
+  let cu="";secs.forEach(s=>{if(scrollY>=s.offsetTop-160)cu=s.id;});
+  nas.forEach(a=>a.style.color=a.getAttribute("href")==="#"+cu?"var(--gold)":"");
+});
+
+// ─── FORM ──────────────────────────────────────────────────
+function sendForm(){
+  const n=document.getElementById("fn").value.trim();
+  const e=document.getElementById("fe").value.trim();
+  const s=document.getElementById("fs").value.trim();
+  const m=document.getElementById("fm").value.trim();
+  if(!n||!e||!m){alert("Please fill name, email and message.");return;}
+  location.href=`mailto:satyamraj620@gmail.com?subject=${encodeURIComponent(s||"Portfolio Inquiry")}&body=${encodeURIComponent("Name: "+n+"\nEmail: "+e+"\n\n"+m)}`;
+}
+</script>
+</body>
 </html>
